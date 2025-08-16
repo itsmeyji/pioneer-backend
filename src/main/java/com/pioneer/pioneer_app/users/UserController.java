@@ -6,6 +6,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+    // api/users, 사용자 목록 조회 api
+    // q 파라미터로 해당 값 들어간 사용자만 필터링 가능
 
     private final UserRepository repo;
     public UserController(UserRepository repo) {
