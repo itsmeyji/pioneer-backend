@@ -15,12 +15,12 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    /** 전역 CORS 설정 */
+    //전역 CORS 설정
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
 
-        // 프론트 개발 주소만 정확히 허용 (와일드카드 X)
+        // 프론트 개발 주소만 정확히 허용
         cfg.setAllowedOrigins(List.of("http://localhost:3000"));
         // 필요한 메서드 허용
         cfg.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
@@ -36,13 +36,12 @@ public class SecurityConfig {
         return source;
     }
 
-    /** Spring Security 체인 */
+    // Spring Security 체인
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // REST API라면 보통 CSRF 비활성화
                 .csrf(csrf -> csrf.disable())
-                // 위의 corsConfigurationSource() 빈을 사용
                 .cors(Customizer.withDefaults())
                 // 요청별 인가 규칙
                 .authorizeHttpRequests(auth -> auth
