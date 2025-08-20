@@ -7,7 +7,7 @@ public class SignupRequest {
     @NotBlank private String password;
     @NotBlank private String name;
     @Email @NotBlank private String email;
-    @Min(1) @Max(5) private Integer grade;      // 1~4학년 등록, 그 외 학년은 5로 입력
+    @Min(1) @Max(5) private Integer grade;  // 4학년 이상 (대학원생 등)은 5로 입력
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }

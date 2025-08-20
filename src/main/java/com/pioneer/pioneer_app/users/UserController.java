@@ -1,5 +1,6 @@
 package com.pioneer.pioneer_app.users;
 
+import com.pioneer.pioneer_app.common.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,10 +16,14 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> list(@RequestParam(required = false) String q){
-        return repo.findAll().stream()
-                .filter(u -> q==null || u.getUsername().contains(q) ||
-                        (u.getName()!=null && u.getName().contains(q)))
+    public ApiResponse<List<User>> list(@RequestParam(required = false) String q){
+        var items = repo.findAll().stream()
+                .filter(u -> q == null
+                        || u.getUsername().contains(q)
+                        || (u.getName() != null && u.getName().contains(q)))
                 .toList();
+
+        return ApiResponse.success("회원 목록 조회 성공", items);
     }
+
 }
