@@ -1,5 +1,6 @@
 package com.pioneer.pioneer_app.auth;
 
+import com.pioneer.pioneer_app.users.User;
 import jakarta.validation.constraints.*;
 
 public class SignupRequest {
@@ -7,7 +8,10 @@ public class SignupRequest {
     @NotBlank private String password;
     @NotBlank private String name;
     @Email @NotBlank private String email;
-    @Min(1) @Max(5) private Integer grade;  // 4학년 이상 (대학원생 등)은 5로 입력
+    @Min(1) @Max(4) private Integer grade;
+
+    @NotNull
+    private User.Position position;
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
@@ -19,4 +23,7 @@ public class SignupRequest {
     public void setEmail(String email) { this.email = email; }
     public Integer getGrade() { return grade; }
     public void setGrade(Integer grade) { this.grade = grade; }
+    public User.Position getPosition() { return position; }
+    public void setPosition(User.Position position) { this.position = position; }
+
 }

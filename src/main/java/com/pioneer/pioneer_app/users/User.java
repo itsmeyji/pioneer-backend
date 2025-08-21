@@ -1,10 +1,6 @@
 package com.pioneer.pioneer_app.users;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,8 +16,32 @@ public class User {
 
     private String username;
     private String password;
-    private String name;
-    private String email;
-    private Integer grade;
+    private String name;             //이름
+    private String email;            //이메일
+    private Integer grade;           //학년
+    private String department;       //학과
+    private String studentNumber;    // 학번
+
+    // 직책 (영문 저장, 한글 변환은 getDisplayName() 활용)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Position position;
+
     private String role;
+
+    public enum Position {
+        UNDERGRADUATE("학부"),
+        MASTER("석박사"),
+        OTHER("기타");
+
+        private final String displayName;
+
+        Position(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
 }

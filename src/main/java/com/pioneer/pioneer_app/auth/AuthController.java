@@ -36,7 +36,8 @@ public class AuthController {
         u.setName(body.getName());
         u.setEmail(body.getEmail());
         u.setGrade(body.getGrade());
-        u.setRole("user"); // 기본 권한
+        u.setRole("user");  // 기본 권한
+        u.setPosition(body.getPosition());
 
         users.save(u);
         return ApiResponse.success("회원가입 성공", Map.of("userId", u.getUserId()));
@@ -58,7 +59,9 @@ public class AuthController {
         return ApiResponse.success("로그인 성공", Map.of(
                 "role", u.getRole(),
                 "userId", u.getUserId(),
-                "name", u.getName()
+                "name", u.getName(),
+                "position", u.getPosition().getDisplayName(),
+                "grade", u.getGrade()
         ));
     }
 
