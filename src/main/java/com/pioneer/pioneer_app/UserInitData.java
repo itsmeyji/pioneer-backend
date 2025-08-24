@@ -6,9 +6,8 @@ import com.pioneer.pioneer_app.users.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import java.time.LocalDate;
-
+import com.pioneer.pioneer_app.attendance.Attendance.Status;
 
 @Configuration
 public class UserInitData {
@@ -36,7 +35,7 @@ public class UserInitData {
                 admin2.setEmail("admin2@gmail.com");
                 admin2.setGrade(4);
                 admin2.setRole("admin");
-                admin2.setPosition(User.Position.OTHER);
+                admin2.setPosition(User.Position.UNDERGRADUATE); // ⚠️ 수정: OTHER -> UNDERGRADUATE
                 admin2.setDepartment("핀빅스");
                 admin2.setStudentNumber("00000002");
                 users.save(admin2);
@@ -77,14 +76,32 @@ public class UserInitData {
                 stu3.setDepartment("컴퓨터과학과");
                 stu3.setStudentNumber("20207890");
                 users.save(stu3);
-            }
 
-            // student1 ID 조회
-            Long student1Id = users.findByUsername("student1")
-                    .orElseThrow(() -> new IllegalStateException("student1 not found"))
-                    .getUserId();
+                // ✅ 추가: 출석 데이터 초기화
+                LocalDate today = LocalDate.now();
+
+                Attendance a1 = new Attendance();
+                a1.setDate(today.minusDays(1)); // 어제
+                a1.setUser(stu1);
+                a1.setStatus(Status.ATTEND);
+                attendances.save(a1);
+
+                Attendance a2 = new Attendance();
+                a2.setDate(today.minusDays(1)); // 어제
+                a2.setUser(stu2);
+                a2.setStatus(Status.ABSENT);
+                a2.setReason("개인 사정");
+                attendances.save(a2);
+
+                Attendance a3 = new Attendance();
+                a3.setDate(today); // 오늘
+                a3.setUser(stu1);
+                a3.setStatus(Status.UNKNOWN);
+                attendances.save(a3);
+            }
         };
     }
+}
 
     //관리자
     //admin1 : 컴퓨터과학과, 학번 00000001, MASTER(석박사)
@@ -94,4 +111,3 @@ public class UserInitData {
     //student1 : 핀빅스, 학번 20201234, UNDERGRADUATE
     //student2 : 핀빅스, 학번 20205678, UNDERGRADUATE
     //student3 : 컴퓨터과학과, 학번 20207890, UNDERGRADUATE
-}
