@@ -72,4 +72,17 @@ public class AuthController {
         session.invalidate();
         return ApiResponse.success("로그아웃 성공");
     }
+
+    // 로그인한 회원 이름 조회
+    @GetMapping("/me/name")
+    public ApiResponse<Map<String, Object>> getMyName(HttpSession session) {
+        Object name = session.getAttribute("LOGIN_USER_NAME");
+
+        if (name == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 상태가 아닙니다.");
+        }
+
+        return ApiResponse.success("로그인한 회원 이름 조회 성공",
+                Map.of("name", name.toString()));
+    }
 }

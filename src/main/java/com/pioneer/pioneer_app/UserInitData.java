@@ -35,7 +35,7 @@ public class UserInitData {
                 admin2.setEmail("admin2@gmail.com");
                 admin2.setGrade(4);
                 admin2.setRole("admin");
-                admin2.setPosition(User.Position.UNDERGRADUATE); // ⚠️ 수정: OTHER -> UNDERGRADUATE
+                admin2.setPosition(User.Position.UNDERGRADUATE);
                 admin2.setDepartment("핀빅스");
                 admin2.setStudentNumber("00000002");
                 users.save(admin2);
@@ -81,13 +81,13 @@ public class UserInitData {
                 LocalDate today = LocalDate.now();
 
                 Attendance a1 = new Attendance();
-                a1.setDate(today.minusDays(1)); // 어제
+                a1.setDate(today.minusDays(2));
                 a1.setUser(stu1);
                 a1.setStatus(Status.ATTEND);
                 attendances.save(a1);
 
                 Attendance a2 = new Attendance();
-                a2.setDate(today.minusDays(1)); // 어제
+                a2.setDate(today.minusDays(1));
                 a2.setUser(stu2);
                 a2.setStatus(Status.ABSENT);
                 a2.setReason("개인 사정");
