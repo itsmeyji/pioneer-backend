@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/attendances")
 public class AttendanceController {
     private final AttendanceRepository repo;
+
     public AttendanceController(AttendanceRepository repo) {
         this.repo = repo;
     }
