@@ -20,7 +20,7 @@ public class Schedule {
     private String location;
     private String description;
 
-    @Builder.Default
+    @Builder.Default   // default 안쓰면 인식 못함
     private boolean important = false;     // 기본값 : 안중요
 
     // 작성자 추적
