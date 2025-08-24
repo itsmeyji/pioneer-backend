@@ -19,9 +19,9 @@ public class ScheduleService {
     private final AttendanceRepository attendances;
 
     public ScheduleService(ScheduleRepository schedules, UserRepository users, AttendanceRepository attendances) {
-        this.schedules = schedules;
-        this.users = users;
-        this.attendances = attendances;
+            this.schedules = schedules;
+            this.users = users;
+            this.attendances = attendances;
     }
 
     // 일정 목록 조회
