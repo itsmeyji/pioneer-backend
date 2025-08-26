@@ -1,6 +1,8 @@
 package com.pioneer.pioneer_app.attendance;
 
 import com.pioneer.pioneer_app.common.ApiResponse;
+import com.pioneer.pioneer_app.users.User;
+import com.pioneer.pioneer_app.users.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -12,9 +14,11 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/attendances")
 public class AttendanceController {
     private final AttendanceRepository repo;
+    private final UserRepository userRepo;
 
-    public AttendanceController(AttendanceRepository repo) {
+    public AttendanceController(AttendanceRepository repo, UserRepository userRepo) {
         this.repo = repo;
+        this.userRepo = userRepo;
     }
 
     // 전체 조회
@@ -43,6 +47,26 @@ public class AttendanceController {
                 .map(AttendanceResponse::new)
                 .toList();
         return ApiResponse.success("날짜별 출석 조회 성공", items);
+    }
+
+    @PostMapping
+    public ApiResponse<AttendanceResponse> create(@RequestBody Map<String, String> body) {
+        Long userId = Long.parseLong(body.get("userId"));
+        LocalDate date = LocalDate.parse(body.get("date"));
+        Attendance.Status status = Attendance.Status.valueOf(body.get("status"));
+        String reason = body.get("reason");
+
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("유저가 없습니다."));
+
+        Attendance attendance = new Attendance();
+        attendance.setUser(user);
+        attendance.setDate(date);
+        attendance.setStatus(status);
+        attendance.setReason(reason);
+
+        var saved = repo.save(attendance);
+        return ApiResponse.success("출석 등록 성공", new AttendanceResponse(saved));
     }
 
     // 출석 상태 수정

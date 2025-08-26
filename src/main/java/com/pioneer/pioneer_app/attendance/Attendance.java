@@ -5,9 +5,10 @@ import jakarta.persistence.*; import lombok.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name="attendance")
 @Getter @Setter @NoArgsConstructor
 public class Attendance {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attendanceId;
 
     // User와 연결 (FK)
