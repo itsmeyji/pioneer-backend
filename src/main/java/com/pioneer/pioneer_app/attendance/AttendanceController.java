@@ -49,6 +49,7 @@ public class AttendanceController {
         return ApiResponse.success("날짜별 출석 조회 성공", items);
     }
 
+    // 출석 등록
     @PostMapping
     public ApiResponse<AttendanceResponse> create(@RequestBody Map<String, String> body) {
         Long userId = Long.parseLong(body.get("userId"));

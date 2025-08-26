@@ -7,6 +7,8 @@ public class SignupRequest {
     @NotBlank private String username;
     @NotBlank private String password;
     @NotBlank private String name;
+    @NotBlank private String studentNumber;
+    @NotBlank private String department;
     @Email @NotBlank private String email;
     @Min(1) @Max(4) private Integer grade;
 
@@ -15,6 +17,10 @@ public class SignupRequest {
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
+    public String getStudentNumber() { return studentNumber; }
+    public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
     public String getName() { return name; }
@@ -25,5 +31,6 @@ public class SignupRequest {
     public void setGrade(Integer grade) { this.grade = grade; }
     public User.Position getPosition() { return position; }
     public void setPosition(User.Position position) { this.position = position; }
+
 
 }

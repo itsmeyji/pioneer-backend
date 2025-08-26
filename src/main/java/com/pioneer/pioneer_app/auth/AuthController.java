@@ -35,6 +35,8 @@ public class AuthController {
         u.setPassword(body.getPassword());
         u.setName(body.getName());
         u.setEmail(body.getEmail());
+        u.setStudentNumber(body.getStudentNumber());
+        u.setDepartment(body.getDepartment());
         u.setGrade(body.getGrade());
         u.setRole("user");  // 기본 권한
         u.setPosition(body.getPosition());
@@ -73,16 +75,18 @@ public class AuthController {
         return ApiResponse.success("로그아웃 성공");
     }
 
-    // 로그인한 회원 이름 조회
-    @GetMapping("/me/name")
-    public ApiResponse<Map<String, Object>> getMyName(HttpSession session) {
-        Object name = session.getAttribute("LOGIN_USER_NAME");
+    // 로그인한 회원 전체 정보 조회
+    @GetMapping("/me")
+    public ApiResponse<User> getMyInfo(HttpSession session) {
+        Object userId = session.getAttribute("LOGIN_USER_ID");  // userId 가져오기
 
-        if (name == null) {
+        if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 상태가 아닙니다.");
         }
 
-        return ApiResponse.success("로그인한 회원 이름 조회 성공",
-                Map.of("name", name.toString()));
+        User user = users.findById((Long) userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보를 찾을 수 없습니다."));
+
+        return ApiResponse.success("로그인한 회원 정보 조회 성공", user);
     }
 }
