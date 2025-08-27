@@ -50,8 +50,8 @@ public class SecurityConfig {
                         // 로그인/회원가입 등 공개 엔드포인트
                         .requestMatchers("/api/auth/**").permitAll()
                         // 그 외는 인증 필요
-//                        .anyRequest().permitAll()       // 개발 완료 후 삭제
-                        .anyRequest().authenticated()    // 개발 완료 후 반드시 이걸로 교체, 바로 위 코드 삭제
+                        .anyRequest().permitAll()       // 개발 완료 후 삭제
+//                        .anyRequest().authenticated()    // 개발 완료 후 반드시 이걸로 교체, 바로 위 코드 삭제
                 );
 
         // 세션 기반(서버 세션/쿠키) 사용 시 별도 세션정책 설정 불필요
